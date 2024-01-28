@@ -3,14 +3,16 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Input from "../shared-components/src/components/Input/Input";
-import store, { useAppDispatch } from "./store";
+import { useAppDispatch } from "./store";
 import { useSelector } from "react-redux";
-import { globalActions } from "../shared-components/src/store/global/global.actions";
-import { globalSelectors } from "../shared-components/src/store/global/global.selectors";
+import { globalActions } from "./store/my-global/global.actions";
+import { commonGlobalSelectors } from "../../react-components/src/store/global/global.selectors"
+import { globalSelectors } from "./store/my-global/global.selectors";
 
 function App() {
   const [count, setCount] = useState(0);
-  const isLoading = useSelector(globalSelectors.isLoading);
+  const isLoading = useSelector(commonGlobalSelectors.isLoading);
+  const showCalculator = useSelector(globalSelectors.showCalculator)
   const dispatch = useAppDispatch();
 
   const handleLoaderToggle = () => {
@@ -20,7 +22,12 @@ function App() {
       dispatch(globalActions.incrementLoaderCount());
     }
   };
-  console.log("store", store.getState());
+
+  const handleCalculator = () => {
+    dispatch(globalActions.setShowCalculator(!showCalculator));
+  };
+
+  console.log('isLoading', isLoading)
 
   return (
     <>
@@ -47,6 +54,9 @@ function App() {
       <Input />
       <button onClick={handleLoaderToggle}>Press to user loader</button>
       {isLoading && <p>Loading now</p>}
+
+      <button onClick={handleCalculator}>Handle showCalculator</button>
+      <p>showCalculator is - {`${showCalculator}`}</p>
     </>
   );
 }

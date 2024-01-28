@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import globalReducer from "../../shared-components/src/store/global/global.reducer";
+import globalReducer from "./my-global/global.reducer";
 
 const rootReducer = combineReducers({
   global: globalReducer,
