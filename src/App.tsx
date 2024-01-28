@@ -3,9 +3,26 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Input from "../shared-components/src/components/Input/Input";
+import { useSelector } from "react-redux";
+import { globalSelectors } from "./store/global/global.selectors";
+import { useAppDispatch } from "./store";
+import { commonGlobalActions } from "../../react-components/src/store/global/global.reducer";
 
 function App() {
+  const isLoading = useSelector(globalSelectors.isLoading);
   const [count, setCount] = useState(0);
+  const dispatch = useAppDispatch();
+
+  const handleLoader = () => {
+    console.log("Entering");
+    if (isLoading) {
+      dispatch(commonGlobalActions.decrementLoaderCount());
+    } else {
+      dispatch(commonGlobalActions.incrementLoaderCount());
+    }
+  };
+
+  console.log("isLoading", isLoading);
 
   return (
     <>
@@ -30,6 +47,8 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <Input />
+
+      <button onClick={handleLoader}>Handle loader</button>
     </>
   );
 }

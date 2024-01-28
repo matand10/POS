@@ -1,12 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  commonGlobalSlice,
+  commonGlobalInitialState,
+  commonGlobalActions,
+} from "../../../../react-components/src/store/global/global.reducer";
+import { GlobalState } from "../../../../react-components/src/store/global/global-state";
+
+type GlobalType = {
+  showCalculator: boolean;
+} & GlobalState;
 
 const initialState = {};
 
 export const globalSlice = createSlice({
   name: "global",
-  initialState: {},
+  initialState: {
+    ...commonGlobalInitialState,
+    showCalculator: false,
+  } as GlobalType,
   reducers: {
-    clearState: () => initialState,
+    setShowCalculator: (state, action: PayloadAction<boolean>) => {
+      state.showCalculator = action.payload;
+    },
   },
 });
 
