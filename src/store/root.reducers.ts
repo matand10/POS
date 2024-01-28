@@ -1,9 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import globalReducer from "./my-global/global.reducer";
 
-const rootReducer = combineReducers({
-  global: globalReducer,
-});
+const rootReducer = combineReducers({});
 
 export type Rootstate = ReturnType<typeof rootReducer>;
 export default rootReducer;
