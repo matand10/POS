@@ -7,6 +7,7 @@ import { globalActions } from "./store/global/global.reducer";
 import { useEffect } from "react";
 import { posGlobalActions } from "./store/global/global.actions";
 import { Input } from "../shared-components/src";
+import { sum } from "../shared-components/src/utils/common.util";
 
 
 function App() {
@@ -30,6 +31,9 @@ function App() {
   const handleShowCalculator = () => {
     dispatch(posGlobalActions.setShowCalculator(!showCalculator))
   }
+
+  const res = sum(1, 2, 3, 4)
+  console.log('res', res)
 
   return (
     <>
