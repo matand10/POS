@@ -1,26 +1,34 @@
 import "./App.css";
-import Input from "../shared-components/src/components/Input/Input";
 import { useSelector } from "react-redux";
 import { globalSelectors } from "./store/global/global.selectors";
 import { useAppDispatch } from "./store";
 import { globalCommonActions } from "../../react-components/src/store/global/global.reducer";
 import { globalActions } from "./store/global/global.reducer";
+import { useEffect } from "react";
+import { posGlobalActions } from "./store/global/global.actions";
+import { Input } from "../shared-components/src";
+
 
 function App() {
   const isLoading = useSelector(globalSelectors.isLoading);
+  const errorMessage = useSelector(globalSelectors.errorMessage);
   const showCalculator = useSelector(globalSelectors.showCalculator);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(posGlobalActions.globalInitThunk())
+  }, [])
+
   const handleLoader = () => {
     if (isLoading) {
-      dispatch(globalCommonActions.decrementLoaderCount());
+      dispatch(posGlobalActions.decrementLoaderCount());
     } else {
-      dispatch(globalCommonActions.incrementLoaderCount());
+      dispatch(posGlobalActions.incrementLoaderCount());
     }
   };
 
   const handleShowCalculator = () => {
-    dispatch(globalActions.setShowCalculator(!showCalculator))
+    dispatch(posGlobalActions.setShowCalculator(!showCalculator))
   }
 
   return (
@@ -38,6 +46,10 @@ function App() {
       <div>
         <button onClick={handleShowCalculator}>Handle Calculator</button>
         <p>Show Calculator is: {`${showCalculator}`}</p>
+      </div
+      >
+      <div>
+        <p>Show errorMessage: {`${errorMessage}`}</p>
       </div>
     </>
   );
