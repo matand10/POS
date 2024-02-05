@@ -2,12 +2,11 @@ import "./App.css";
 import { useSelector } from "react-redux";
 import { globalSelectors } from "./store/global/global.selectors";
 import { useAppDispatch } from "./store";
-import { globalCommonActions } from "../../react-components/src/store/global/global.reducer";
-import { globalActions } from "./store/global/global.reducer";
 import { useEffect } from "react";
 import { posGlobalActions } from "./store/global/global.actions";
 import { Input } from "../shared-components/src";
-
+import { handleLoader } from "../shared-components/src/services/api/interceptor";
+import { globalActions } from "./store/global/global.reducer";
 
 function App() {
   const isLoading = useSelector(globalSelectors.isLoading);
@@ -16,20 +15,16 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(posGlobalActions.globalInitThunk())
-  }, [])
+    // dispatch(globalActions.);
+  }, []);
 
-  const handleLoader = () => {
-    if (isLoading) {
-      dispatch(posGlobalActions.decrementLoaderCount());
-    } else {
-      dispatch(posGlobalActions.incrementLoaderCount());
-    }
+  const handleInterceptor = () => {
+    handleLoader(undefined, isLoading);
   };
 
   const handleShowCalculator = () => {
-    dispatch(posGlobalActions.setShowCalculator(!showCalculator))
-  }
+    dispatch(posGlobalActions.setShowCalculator(!showCalculator));
+  };
 
   return (
     <>
@@ -39,15 +34,14 @@ function App() {
       </div>
 
       <div>
-        <button onClick={handleLoader}>Handle loader</button>
+        <button onClick={handleInterceptor}>Handle loader</button>
         <p>Loader is: {`${isLoading}`}</p>
       </div>
 
       <div>
         <button onClick={handleShowCalculator}>Handle Calculator</button>
         <p>Show Calculator is: {`${showCalculator}`}</p>
-      </div
-      >
+      </div>
       <div>
         <p>Show errorMessage: {`${errorMessage}`}</p>
       </div>

@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   commonGlobalInitialState,
 } from "../../../../react-components/src/store/global/global.reducer";
-import { posGlobalThunkActionsBuilder } from "./global.thunk-builder";
 import { commonGlobalSlice } from "../../../../react-components/src/store/global/global.reducer";
 import { PosGlobalState } from "./global-state";
 
@@ -11,9 +10,10 @@ const initialState: PosGlobalState = {
   showCalculator: false,
 }
 
+console.log('commonGlobalSlice', commonGlobalSlice)
+
 export const globalSlice = createSlice({
   ...commonGlobalSlice,
-  name: "global",
   initialState,
   reducers: {
     ...commonGlobalSlice.caseReducers,
@@ -21,7 +21,6 @@ export const globalSlice = createSlice({
       state.showCalculator = action.payload;
     },
   },
-  extraReducers: posGlobalThunkActionsBuilder
 });
 
 export const globalInitialState = globalSlice.getInitialState();
